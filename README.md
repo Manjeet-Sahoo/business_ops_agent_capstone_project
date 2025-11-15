@@ -1,108 +1,198 @@
-#Problem
+#Business Operations AI Agent Suite
 
-Small businesses spend many hours handling invoices. Someone has to open PDFs, read amounts, note dates, check which payment is overdue, calculate what is due soon, and follow up.
-This work is slow, boring, and often leads to mistakes.
-If one reminder is missed, the business pays late fees.
-If one invoice is entered incorrectly, the business loses money.
+An intelligent multi agent workflow that reads invoices, extracts key fields, stores structured records, generates reminders, and produces real-time business insights with zero manual work.
 
-Many business owners told us they do not have a proper system. They usually save invoices in folders and update payment sheets manually.
-This breaks easily when work grows.
+Designed specifically for the Enterprise Agents Track of the Google × Kaggle AI Agents Capstone.
+
+This repository demonstrates how AI agents can automate real business operations at a production-ready level.
 
 
+#Why This Project Matters
 
-#Goal
+Modern businesses run on documents.
+Invoices, bills, receipts, payment reminders.
+Yet most companies still process them manually.
 
-Create an AI system that handles the entire invoice process without human effort.
+That leads to
+• wasted hours
+• lost invoices
+• late fees
+• inconsistent records
+• no overview of financial health
 
+This project replaces that entire manual workflow with an autonomous agent system that behaves like a trained operations team.
 
-
-#Solution
-
-I built a multi agent AI workflow that reads invoices, extracts details, stores them, creates reminders, checks for overdue bills, gives weekly insights, and logs everything.
-The agents work together like a small digital team.
-
-
-
-#System agents
-
-• Document Agent: reads PDF or image and turns it into text
-• Extraction Agent: pulls fields like invoice number, vendor, date, total amount
-• Memory Agent: stores the invoice in long term storage
-• Workflow Agent: creates reminders and tracks which ones are sent
-• Insight Agent: checks the database and creates business summaries
-• Loop Agent: runs daily in the background and updates overdue status
-• Observability system: logs, metrics, and request tracing
-• Evaluation Agent: tracks quality of extraction (simple rule based check)
+Upload an invoice and the agents take over.
+The accuracy, speed, and traceability are significantly better than traditional workflows.
 
 
+#Key Capabilities
 
-#Why agents
+This system is built to demonstrate real enterprise value.
 
-Agents split work into small parts.
-One agent can fail without breaking the entire system.
-The flow becomes easier to test.
-Each agent can have its own tool set.
-This makes the final system stable and expandable.
+• Fully automated invoice extraction (PDF or image)
+• OCR powered text understanding
+• LLM assisted field extraction (invoice id, vendor, date, amount)
+• Long-term invoice storage
+• Auto-generated reminders with due dates
+• Daily agent loop that updates overdue status
+• Weekly insight engine for business financial health
+• Full observability layer for logs and metrics
+• MCP styled custom tools for agent interoperability
+• Containerized deployment with Docker
 
-
-
-#Key course concepts used
-
-• Multi agent system
-• MCP style tools
-• Long term memory with SQLite
-• Session notes and state
-• Observability using metrics and logs
-• Loop agent that runs daily
-• Agent evaluation prompts
-• Optional deployment ready with Docker
-
-This covers more than the required three concepts.
+Every component mirrors real business use cases and directly applies course concepts.
 
 
-#Architecture
+#Enterprise-Grade Agent Architecture
 
-When an invoice is uploaded, the Document Agent turns it into text by using OCR.
-That text moves to the Extraction Agent which pulls key fields.
-The Memory Agent stores the extracted values inside SQLite.
-A new reminder is created automatically.
-The Workflow Agent lists all pending reminders and marks them when sent.
-The Loop Agent runs every day and checks for overdue items.
-The Insight Agent scans the stored invoices and gives a summary like
-• number of overdue invoices
-• number of invoices due soon
-• overall status of invoice health
+Below is the high-level system design (matches the image you will upload on Kaggle)
 
-The Observability tools record every request and open a metrics server that can be used by Prometheus.
+Flow Overview
+• User uploads an invoice
+• Document Agent runs OCR
+• Extraction Agent identifies structured fields
+• Memory Agent saves the record
+• Workflow Agent creates reminders
+• Loop Agent checks overdue items daily
+• Insight Agent produces actionable summaries
+• Observability tools monitor activity
 
-<img width="1536" height="1024" alt="ai agent capstone project" src="https://github.com/user-attachments/assets/72085ae8-2ec0-4fb0-9c5e-de8a8a1cbdbb" />
+#Agent Roles
+• Document Agent → Vision and OCR
+• Extraction Agent → Structured field parsing
+• Workflow Agent → Business operations logic
+• Insight Agent → Analytics and forecasting
+• Notification Agent → Action triggers
+• Loop Agent → Automation and scheduling
+• Evaluation Agent → Quality feedback
 
-
-#Value
-
-This system gives businesses
-• faster invoice management
-• clean data storage
-• reduced manual errors
-• early warning for overdue payments
-• a clear weekly health report
-
-A small company can save many hours every month by using this.
-A larger company can scale it without extra hiring.
+This structure shows a complete enterprise multi agent system, not a single-model solution.
 
 
-#What I learn
+#Folder Structure
+business_ops_agent/
+│
+├── main.py               
+├── requirements.txt      
+├── Dockerfile            
+├── docker-compose.yml    
 
-During the AI course I learned how agents work, how to attach tools, how looping can be done, and how memory can be connected.
-I applied everything into one clean system that solves a real problem.
-I tested the system with sample invoices and verified that extraction and reminders work.
-The code is simple for others to understand and extend.
+├── agents/               
+   ├── document_agent.py
+   ├── extraction_agent.py
+   ├── workflow_agent.py
+   ├── insight_agent.py
+   ├── notification_agent.py
+   ├── loop_agent.py
+   ├── evaluation_agent.py
+   └── mcp_tools.json
 
-#Next steps
+├── memory/
+   └── invoice_db.py
 
-• add email sending for real reminders
-• add vendor matching using embeddings
-• deploy to Cloud Run for public use
-• add a dashboard for insights
+├── utils/
+   ├── ocr.py
+   ├── observability.py
+   └── tracing.py
 
-#This project shows how agent systems can remove repetitive office work and save real time.
+ └── samples/
+
+The structure remains clean, modular, and extendable.
+
+
+#Installation and Setup
+• Step 1
+
+Install Python 3.10 or newer.
+
+• Step 2
+
+Install project dependencies:
+
+pip install -r requirements.txt
+
+• Step 3
+
+Start the API server:
+
+uvicorn main:app --reload --port 8000
+
+
+Open the interactive API:
+
+http://localhost:8000/docs
+
+
+#How to Use
+1. Upload an invoice
+
+Endpoint
+POST /upload-invoice
+
+Select a PDF or image of an invoice.
+The system extracts fields and stores records automatically.
+
+2. View reminders
+
+GET /reminders
+Shows all invoices that require action.
+
+3. Mark reminder as sent
+
+POST /send/{id}
+Closes a pending reminder.
+
+4. Generate insights
+
+GET /insights
+Summaries include
+• overdue invoices
+• invoices due soon
+• upcoming cashflow concerns
+
+
+Daily Loop Automation
+
+A background agent runs every 24 hours to
+• detect overdue invoices
+• update reminder states
+• keep the system always current
+
+This simulates real scheduling inside enterprise workflows.
+
+
+#Observability and Metrics
+
+The metrics server runs on port 8001.
+It exposes system level data suitable for dashboards and monitoring tools like Prometheus or Grafana.
+
+Logs include
+• request id tracing
+• time stamps
+• extraction status
+• reminder operations
+
+This matches real industry observability standards.
+
+
+Docker Deployment
+
+Enterprise environments use containers.
+This project is fully container-ready.
+
+Build:
+
+docker build -t business_ops .
+
+
+Run:
+
+docker run -p 8000:8000 business_ops
+
+
+Then open the API at
+http://localhost:8000/docs
+
+
+<img width="1024" height="1536" alt="readme" src="https://github.com/user-attachments/assets/33199e1e-b20f-46fb-9219-a30fd6798557" />
