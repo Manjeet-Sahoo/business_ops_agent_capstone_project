@@ -1,0 +1,12 @@
+fastapi
+uvicorn[standard]
+python-multipart
+pytesseract
+pillow
+pdf2image
+sqlalchemy
+pydantic
+python-dotenv
+dateparser
+prometheus-client
+requests
