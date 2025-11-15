@@ -70,6 +70,10 @@ Flow Overview
 This structure shows a complete enterprise multi agent system, not a single-model solution.
 
 
+<img width="1536" height="1024" alt="ai agent capstone project" src="https://github.com/user-attachments/assets/241afbd2-34f6-453c-9b32-c93815efeddc" />
+
+
+
 #Folder Structure
 business_ops_agent/
 │
@@ -195,4 +199,3 @@ Then open the API at
 http://localhost:8000/docs
 
 
-<img width="1024" height="1536" alt="readme" src="https://github.com/user-attachments/assets/33199e1e-b20f-46fb-9219-a30fd6798557" />
